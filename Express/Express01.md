@@ -4,7 +4,7 @@ Express 알아보기
 Node.js에서 사용할 수 있는 Web Framework 중 가장 인기있는 Express에 대해 알아보자
 --------------
 
-Express는 Fast, Minimalist, **Unopinionated** 를 표방하는 오픈소스 **라우팅** 및 **미들웨어** 프레임워크이다. Express는 왜 중요하고, 어떤 일을 하는지 알아보자.
+Express는 Fast, Minimalist, **Unopinionated** 를 표방하는 오픈소스 **라우팅** 및 **미들웨어** 웹 프레임워크이다. Express는 왜 중요하고, 어떤 일을 하는지 알아보자.
 
 ---
 이 문서는 Express [공식가이드](https://expressjs.com/)문서를 참조하여 작성하였음.  
