@@ -13,10 +13,10 @@ Source : 쉽게 배우는 알고리즘 2020년 개정판 - 문병로
 - 추정 후 증명
 - 마스터 증명
 ## Chapter 4. 정렬
-- selection sort
-- bubble sort
-- insertion sort
-- merge sort
+- [selection sort](https://github.com/roselidev/Studylog/Algorithm/selection_sort.py)
+- [bubble sort](https://github.com/roselidev/Studylog/Algorithm/bubble_sort.py)
+- [insertion sort](https://github.com/roselidev/Studylog/Algorithm/insertion_sort.py)
+- [merge sort]((https://github.com/roselidev/Studylog/Algorithm/merge_sort.py))
 - quick sort
 - heap sort
 - radix sort
