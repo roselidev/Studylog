@@ -1,12 +1,12 @@
 # Studylog
 
 ## Algorithm
-- implement basic alorithms
+- Implement basic alorithms
 ---
 ## ML
-- Paper Reading
+- Paper reading
 - Library tutorials
 ---
 ## Web
-- Backend Roadmap todolist
+- Backend roadmap todolist
 - Library tutorials
