@@ -1,31 +1,32 @@
 source : https://roadmap.sh/backend
+
 [한국어](https://github.com/roselidev/Studylog/blob/master/Web/README.ko.md)
 
 # Backend Roadmap Todo list
 
 ## internet
-- [ ] [Internet basic concepts](https://open.lib.umn.edu/informationsystems/chapter/12-2-internet-101-understanding-how-the-internet-works/) (HTTP, DNS, Domain Name, hosting, Browsers)
+- [x] [Internet basic concepts](https://open.lib.umn.edu/informationsystems/chapter/12-2-internet-101-understanding-how-the-internet-works/) (HTTP, DNS, Domain Name, hosting, Browsers)
 
 ## Basic Frontend Knowledge
-- [ ] [HTML/CSS/JS](https://www.w3schools.com/html/default.asp)
+- [x] [HTML/CSS/JS](https://www.w3schools.com/html/default.asp)
 
 ## OS
-- [ ] [Terminal/Shell Commands](https://www.liquidweb.com/kb/basic-bash-shell-commands-a-cli-tutorial/)
-- [ ] [OS Basics](https://www.ics.uci.edu/~ics143/lectures.html) (Process Management, Threads, Memory Management, Interprocess Communication, I/O Management, POSIX Basics, Networking concepts)
+- [x] [Terminal/Shell Commands](https://www.liquidweb.com/kb/basic-bash-shell-commands-a-cli-tutorial/)
+- [x] [OS Basics](https://www.ics.uci.edu/~ics143/lectures.html) (Process Management, Threads, Memory Management, Interprocess Communication, I/O Management, POSIX Basics, Networking concepts)
 
 ## Choose a language
-- [ ] JAVA, C#, PHP, ***JS***, ***Python***, Ruby, GO, Rust
+- [x] JAVA, C#, PHP, ***JS***, ***Python***, Ruby, GO, Rust
 
 ## Choose a version control system
-- [ ] [Git](https://guides.github.com/introduction/git-handbook/)
+- [x] [Git](https://guides.github.com/introduction/git-handbook/)
 
 ## DB
-- [ ] RDBS : [MySQL](https://www.w3schools.com/sql/default.asp)
+- [x] RDBS : [MySQL](https://www.w3schools.com/sql/default.asp)
 - [ ] NoSQL : [MongoDB](https://www.w3schools.com/python/python_mongodb_getstarted.asp)
 - [ ] [DB Basic Concepts](https://courses.cs.washington.edu/courses/csep544/10au/Calendar.htm) (ACID, ORMs, Transactions, N+1 Problem, Data Replication, Sharding Strategies, CAP Theorem, DB normalization, Indices)
 
 ## API
-- [ ] [REST API](https://www.w3schools.in/restful-web-services/intro/)
+- [x] [REST API](https://www.w3schools.in/restful-web-services/intro/)
 - [ ] [JS Web API](https://www.w3schools.com/js/js_api_intro.asp)
 - [ ] [Authentication](https://www.tutorialspoint.com/oauth2.0/index.htm) (OAuth, Basic Auth, Token Auth, JWT)
   

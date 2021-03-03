@@ -1,31 +1,32 @@
 출처 : https://roadmap.sh/backend
+
 [English](https://github.com/roselidev/Studylog/blob/master/Web/README.md)
 
 # 백엔드 로드맵 todo
 
 ## 인터넷 기초 개념 잡기
-- [ ] [인터넷 기초 개념](https://velog.io/@homeless-leesky/backend-basic1) (HTTP, DNS, Domain Name, hosting, Browsers)
+- [x] [인터넷 기초 개념](https://velog.io/@homeless-leesky/backend-basic1) (HTTP, DNS, Domain Name, hosting, Browsers)
 
 ## 프론트엔드 기초 개념 잡기
-- [ ] [HTML/CSS/JS](https://www.w3schools.com/html/default.asp)
+- [x] [HTML/CSS/JS](https://www.w3schools.com/html/default.asp)
 
 ## OS 기초 개념 잡기
-- [ ] [Terminal/Shell Commands](https://www.liquidweb.com/kb/basic-bash-shell-commands-a-cli-tutorial/)
-- [ ] [OS Basics](https://www.ics.uci.edu/~ics143/lectures.html) (Process Management, Threads, Memory Management, Interprocess Communication, I/O Management, POSIX Basics, Networking concepts)
+- [x] [Terminal/Shell Commands](https://www.liquidweb.com/kb/basic-bash-shell-commands-a-cli-tutorial/)
+- [x] [OS Basics](https://www.ics.uci.edu/~ics143/lectures.html) (Process Management, Threads, Memory Management, Interprocess Communication, I/O Management, POSIX Basics, Networking concepts)
 
 ## 언어 정하기
-- [ ] JAVA, C#, PHP, ***JS***, ***Python***, Ruby, GO, Rust
+- [x] JAVA, C#, PHP, ***JS***, ***Python***, Ruby, GO, Rust
 
 ## 버전컨트롤시스템 익히기
-- [ ] [Git](https://guides.github.com/introduction/git-handbook/)
+- [x] [Git](https://guides.github.com/introduction/git-handbook/)
 
 ## DB 개념 & 다양한 DBMS 사용법 익히기
-- [ ] RDBS : [MySQL](https://www.w3schools.com/sql/default.asp)
+- [x] RDBS : [MySQL](https://www.w3schools.com/sql/default.asp)
 - [ ] NoSQL : [MongoDB](https://www.w3schools.com/python/python_mongodb_getstarted.asp)
 - [ ] [DB Basic Concepts](https://courses.cs.washington.edu/courses/csep544/10au/Calendar.htm) (ACID, ORMs, Transactions, N+1 Problem, Data Replication, Sharding Strategies, CAP Theorem, DB normalization, Indices)
 
 ## API로 배포하는 법 익히기
-- [ ] [REST API](https://www.w3schools.in/restful-web-services/intro/)
+- [x] [REST API](https://www.w3schools.in/restful-web-services/intro/)
 - [ ] [JS Web API](https://www.w3schools.com/js/js_api_intro.asp)
 - [ ] [Authentication](https://www.tutorialspoint.com/oauth2.0/index.htm) (OAuth, Basic Auth, Token Auth, JWT)
   
