@@ -27,7 +27,7 @@ source : https://roadmap.sh/backend
 
 ## API
 - [x] [REST API](https://www.w3schools.in/restful-web-services/intro/)
-- [ ] [JS Web API](https://www.w3schools.com/js/js_api_intro.asp)
+- [x] [JS Web API](https://www.w3schools.com/js/js_api_intro.asp)
 - [ ] [Authentication](https://www.tutorialspoint.com/oauth2.0/index.htm) (OAuth, Basic Auth, Token Auth, JWT)
   
 ## Caching
@@ -47,7 +47,7 @@ source : https://roadmap.sh/backend
 - [ ] [CI/CD Basics](https://www.infoworld.com/article/3271126/what-is-cicd-continuous-integration-and-continuous-delivery-explained.html)
 
 ## Design and Development Principles
-- [ ] [SOLID, KISS, YAGNI, DRY](https://siderite.dev/blog/solid-principles-plus-dry-yagni-kiss.html/)
+- [x] [SOLID, KISS, YAGNI, DRY](https://siderite.dev/blog/solid-principles-plus-dry-yagni-kiss.html/)
 
 ## Architectureal Patterns
 - [ ] [Monolithic Apps, Microservices, SOA, Serverless](https://rubygarage.org/blog/monolith-soa-microservices-serverless)
@@ -59,7 +59,7 @@ source : https://roadmap.sh/backend
 - [ ] [RabbitMQ](https://www.rabbitmq.com/documentation.html)
 
 ## Virtual Container
-- [ ] [Docker](https://docs.docker.com/)
+- [x] [Docker](https://docs.docker.com/)
 
 ## GraphQL & GraphDB
 - [ ] [Apollo](https://www.apollographql.com/docs/)
