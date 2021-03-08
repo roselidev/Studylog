@@ -27,7 +27,7 @@
 
 ## API로 배포하는 법 익히기
 - [x] [REST API](https://www.w3schools.in/restful-web-services/intro/)
-- [ ] [JS Web API](https://www.w3schools.com/js/js_api_intro.asp)
+- [x] [JS Web API](https://www.w3schools.com/js/js_api_intro.asp)
 - [ ] [Authentication](https://www.tutorialspoint.com/oauth2.0/index.htm) (OAuth, Basic Auth, Token Auth, JWT)
   
 ## 캐싱하는 법 알기
@@ -47,7 +47,7 @@
 - [ ] [CI/CD Basics](https://www.infoworld.com/article/3271126/what-is-cicd-continuous-integration-and-continuous-delivery-explained.html)
 
 ## SW 디자인/설계 방식 알기
-- [ ] [SOLID, KISS, YAGNI, DRY](https://velog.io/@devmoonsh/ETC-SOLID%EC%9B%90%EC%B9%99-DRY-YAGNI-KISS)
+- [x] [SOLID, KISS, YAGNI, DRY](https://velog.io/@devmoonsh/ETC-SOLID%EC%9B%90%EC%B9%99-DRY-YAGNI-KISS)
 
 ## 아키텍처 패턴 알기
 - [ ] [Monolithic Apps, Microservices, SOA, Serverless](https://rubygarage.org/blog/monolith-soa-microservices-serverless)
@@ -59,7 +59,7 @@
 - [ ] [RabbitMQ](https://www.rabbitmq.com/documentation.html)
 
 ## 컨테이너 & 가상화 방법 익히기
-- [ ] [Docker](https://docs.docker.com/)
+- [x] [Docker](https://docs.docker.com/)
 
 ## GraphQL & GraphDB
 - [ ] [Apollo](https://www.apollographql.com/docs/)
