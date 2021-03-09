@@ -22,7 +22,7 @@ source : https://roadmap.sh/backend
 
 ## DB
 - [x] RDBS : [MySQL](https://www.w3schools.com/sql/default.asp)
-- [ ] NoSQL : [MongoDB](https://www.w3schools.com/python/python_mongodb_getstarted.asp)
+- [x] NoSQL : [MongoDB](https://www.w3schools.com/python/python_mongodb_getstarted.asp)
 - [ ] [DB Basic Concepts](https://courses.cs.washington.edu/courses/csep544/10au/Calendar.htm) (ACID, ORMs, Transactions, N+1 Problem, Data Replication, Sharding Strategies, CAP Theorem, DB normalization, Indices)
 
 ## API
