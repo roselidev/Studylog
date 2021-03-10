@@ -23,7 +23,7 @@
 ## DB 개념 & 다양한 DBMS 사용법 익히기
 - [x] RDBS : [MySQL](https://www.w3schools.com/sql/default.asp)
 - [x] NoSQL : [MongoDB](https://www.w3schools.com/python/python_mongodb_getstarted.asp)
-- [ ] [DB Basic Concepts](https://courses.cs.washington.edu/courses/csep544/10au/Calendar.htm) (ACID, ORMs, Transactions, N+1 Problem, Data Replication, Sharding Strategies, CAP Theorem, DB normalization, Indices)
+- [x] [DB Basic Concepts](https://courses.cs.washington.edu/courses/csep544/10au/Calendar.htm) (ACID, ORMs, Transactions, N+1 Problem, Data Replication, Sharding Strategies, CAP Theorem, DB normalization, Indices)
 
 ## API로 배포하는 법 익히기
 - [x] [REST API](https://www.w3schools.in/restful-web-services/intro/)
@@ -50,7 +50,7 @@
 - [x] [SOLID, KISS, YAGNI, DRY](https://velog.io/@devmoonsh/ETC-SOLID%EC%9B%90%EC%B9%99-DRY-YAGNI-KISS)
 
 ## 아키텍처 패턴 알기
-- [ ] [Monolithic Apps, Microservices, SOA, Serverless](https://rubygarage.org/blog/monolith-soa-microservices-serverless)
+- [x] [Monolithic Apps, Microservices, SOA, Serverless](https://rubygarage.org/blog/monolith-soa-microservices-serverless)
 
 ## 검색엔진 사용법 익히기
 - [ ] [Elastic Search](https://www.elastic.co/guide/index.html?ultron=B-Stack-Trials-AMER-CA-Exact&gambit=Elasticsearch-Documentation&blade=adwords-s&hulk=cpc&Device=c&thor=elasticsearch%20docs&gclid=Cj0KCQiA4feBBhC9ARIsABp_nbUMza_1z4xm7bCT7s9_dPmepJI9swbHSV-zfDagKIo6CLM3dsevXQMaAkPyEALw_wcB)
