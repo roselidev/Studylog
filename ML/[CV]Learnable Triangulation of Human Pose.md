@@ -10,7 +10,7 @@
 
 첫번째 baseline 솔루션은 미분 가능한 기본 대수 삼각 분할로서, 입력 이미지로부터 신뢰 가중치(confidence weights)를 추가한 것이다.  
 
-두번째 솔루션은 intermediate 2D backbone feature map 에서 새로운 체적 집계 방법을 기반으로한다.  
+두번째 솔루션은 intermediate 2D backbone feature map 에서 새로운 볼륨 집계 방법을 기반으로한다.  
 
 집계된 볼륨은 3D convolutions를 거쳐 최종 3D joint heatmap을 생성하고 사전 human pose modelling을 돕는다.  
 
@@ -49,7 +49,7 @@ c.f) 스테레오 이미지란 카메라 2개로 촬영된 이미지이다.
 
 두 방법은 다음과 같다.  
 1. camera-joint confidence weights를 학습매개변수로 한 대수 삼각측량법 접근으로 더 간단한 방법.
-2. 정보의 밀도 분포에 대한 기하학적 집계에 기반한 체적 삼각 측량 접근 방식으로 더 복잡하지만 modelling a human pose prior이 가능한 방법.  
+2. 정보의 밀도 분포에 대한 기하학적 집계에 기반한 볼륨 삼각 측량 접근 방식으로 더 복잡하지만 modelling a human pose prior이 가능한 방법.  
 중요한 점은 두 방법 모든 과정에서 완전히 미분가능하다는 것이다.
 
 지금부터 단시점 및 다시점 자세 측정에 관한 관련 연구를 리뷰한 다음, 본고의 연구에 대해 자세히 이야기 하도록 하겠다.
@@ -57,5 +57,14 @@ c.f) 스테레오 이미지란 카메라 2개로 촬영된 이미지이다.
 본고의 실험 파트에서, 우리는 유명한 데이터셋인 Humans3.6M 및 CMU Panoptic 데이터셋을 사용하였으며, 제안한 기법을 이용하여 SOTA 성능 및 범데이터셋 일반화 가능성을 보였다.
 
 ## Related Work
+
 ### Single view 3D pose estimation
+현재 단시점 3D 자세측정 분야의 SOTA 기술은 크게 두가지로 분류할 수 있다.  
+1. 고화질 2D 자세측정 엔진에서 추출한 2D 좌표를 심층신경망을 통해 3D 좌표로 개별 변환하는 것이다.  
+이는 < A simple yet effective baseline for 3d human pose estimation > 논문에서 대중화되었으며  
+간단하고, 빠르고, 모션캡처 데이터로 훈련할 수 있으며 훈련 후에 2D 백본 엔진을 교체할 수 있다는 장점이 있다.
+2. 컨벌루션 신경망을 사용하여 2D 이미지에서 직접 3D 좌표를 추출하는 것이다.  
+현존하는 가장 좋은 솔루션은 < Integral human pose regression >로 자세의 volumetric representation을 이용한다.  
+이는 Humans3.6M의 single-frame SOTA 결과와 함께 가장 좋은 솔루션으로 꼽힌다.
+
 ### Multi-view view 3D pose estimation
