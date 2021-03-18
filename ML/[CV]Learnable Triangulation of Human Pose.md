@@ -1,4 +1,6 @@
 # [Learnable Triangulation of Human Pose](https://arxiv.org/pdf/1905.05754v1.pdf)
+[pytorch 공식 깃헙](https://github.com/karfly/learnable-triangulation-pytorch)
+
 의역 및 오역 다수
 
 ## Abstract
