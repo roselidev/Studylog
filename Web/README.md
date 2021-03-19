@@ -37,7 +37,7 @@ source : https://roadmap.sh/backend
 
 ## Web Security Knowledge
 - [x] [MD5 and why not to use it](https://www.codeproject.com/Articles/11401/Good-Bye-MD5)
-- [ ] [SHA family](https://en.wikipedia.org/wiki/Secure_Hash_Algorithms)
+- [x] [SHA family](https://en.wikipedia.org/wiki/Secure_Hash_Algorithms)
 - [ ] [Scrypt, Bcrypt](https://medium.com/analytics-vidhya/password-hashing-pbkdf2-scrypt-bcrypt-and-argon2-e25aaf41598e)
 
 ## Testing
