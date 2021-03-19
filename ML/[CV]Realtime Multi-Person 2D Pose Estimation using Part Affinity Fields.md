@@ -9,8 +9,8 @@
 이 접근방식은 우리가 PAFs(Part Affinity Fields) 라고 부르는 *비모수 표현법**(non-parametric representation)을 사용하여 개개인의 신체 부위를 연결한다.  
 이 아키텍처는 global context를 인코딩하여 사람 수에 관계 없이 높은 정확도로 실시간 탐지를 가능하게 하는 greedy bottom-up parsing step을 가능하게 한다.  
 
-    :question: 비모수 표현법 (non-parametric representation)
-    선험적 확률에 의존하지 않고 주어진 데이터에서 직접 확률을 계산하여 검정하는 방식
+> :question: 비모수 표현법 (non-parametric representation)  
+선험적 확률에 의존하지 않고 주어진 데이터에서 직접 확률을 계산하여 검정하는 방식
 
 이 아키텍처는 동일한 순차 예측 프로세스의 두 분기를 통해 동시에 부분 위치와 각 부분간의 연관성을 학습하도록 설계되었다.  
 우리의 방법은 inaugural COCO 2016 keypoints challenge에서 1위를 달성하였으며, MPII Multi-Person benchmark 에서 performance와 efficiency 두 부문에서 SOTA 성능을 현저히 능가하였다.  
