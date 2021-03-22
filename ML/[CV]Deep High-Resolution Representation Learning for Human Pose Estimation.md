@@ -46,4 +46,37 @@ SimpleBaseline은 전치된 convolution 층을 이용하여 고해상도 결과�
 주요 부분은 주로 high-to-low와 low-to-high framework를 차용하며, multi-scale fusion과 intermediate (deep) supervision으로 확장되기도 한다.  
 
 ### High-to-low and low-to-high
+High-to-low process는 저해상 고수준 표현을 목적으로 하는 과정이며,  
+Low-to-high process는 고해상도 표현을 목적으로 하는 과정이다.  
+두 과정 모두 반복작업으로 성능을 개선할 수 있다.  
 
+대표할만한 신경망 디자인패턴은 다음과 같다.  
+1. 대칭형 high-to-low & low-to-high  
+    Hourglass 및 그 후속연구에서는 low-to-high를 high-to-low 과정의 mirror로 사용한다.  
+2. 무거운 high-to-low & 가벼운 low-to-high  
+    ImageNet 분류 신경망에 기반한 high-to-low 과정(e.g. ResNet) 뒤에 
+    몇 개의 bilinear-upsampling 또는 transpose convolution layer를 붙여 low-to-high process를 구성한다.  
+3. dilated convolution 가미  
+    dilated convolution을 ResNet 이나 VGGNet의 마지막 두 단계에 도입하여 공간적인 해상도 유실률을 낮추고, 가벼운 low-to-high 프로세스를 더해 해상도를 더욱 높인다.  
+    이 방법은 비싼 컴퓨팅 리소스를 dilated convolutions를 사용함으로써 줄일 수 있는 방법이다.  
+
+### Multi-scale fusion
+가장 직관적인 방법은 다양한 해상도의 이미지를 각각 다른 신경망에 넣고 결과물을 모으는 것이다.  
+Hourglass 및 그 응용 연구는 high-to-low process 내의 저수준 feature를 동해상도의 low-to-high process 내의 고수준 feature 에 skip connections를 통해 점진적으로 합한다.  
+cascaded pyramid network에서는, globalnet이 high-to-low process 내의 저수준 및 고수준 feature를 low-to-high process로 점진적으로 합치고, 그 다음 refinenet이 convolution을 통과한 저수준 및 고수준 feature를 합친다.  
+우리의 접근방식은 multi-scale fusion을 반복하며, deep fusion 및 그 응용에 부분적으로 영감을 받았다.  
+
+### Intermediate supervision
+Intermediate supervision 또는 deep supervision은 이미지 분류를 위해 생겼으며, 심층신경망 학습 및 히트맵 계산 품질을 높이기 위해 차용되기도 한다.  
+Hourglass 접금방식과 convolutional pose machine approach 방식이 중간 히트맵을 나머지 subnetwork 또는 그 일부의 입력으로 넣는 방식이다.  
+
+### Our approach
+본고의 신경망은 high-to-low subnetworks를 병렬적으로 연결한다.  
+이는 고해상도 표현을 모든 과정동안 유지하며 공간적으로 더 간단한 히트맵을 계산한다.  
+또한 반복적인 fusing 작업으로 고해상도 표현의 신뢰도를 더한다.  
+우리의 접근 방식은 별도의 low-to-high upsampling process 및 저수준 고수준 표현을 합치는 과정이 존재하는 대부분의 연구와 다르다.  
+우리의 접근 방식은 intermediate heatmap supervision을 사용하지 않고, 키포인트 감지 정확도 및 컴퓨팅 성능 복잡도, 파라미터수 면에서 우월함을 보였다.  
+
+## Approach 상세 설명
+인체 자세 측정, 또는 키포인트 감지는 K개의 키포인트 또는 신체부위를 W\*H\*3(RGB) 크기의 이미지 I로부터 찾아내는 것을 목표로 한다.  
+현재의 SOTA 방법은 이 문제를 W'\*H' 크기의 히트맵 K개(각 히트맵은 n번째 신체부위의 location confidence를 나타냄)를 만드는 것으로 변환하기도 한다.  
