@@ -229,5 +229,321 @@ top-down 및 bottom-up pipeline에 관하여는, 두 방법 모두 널리 쓰이
 ## 4. 3D Human Pose Estimation
 3D HPE는 3차원 공간상에 신체 좌표를 나타내는 것으로, 인간의 몸에 관한 광범위한 3D 구조 정보를 제공할 수 있다는 점에서 최근 관심을 얻고 있다.  
 3D 영화, 애니메이션 산업, VR, 온라인 3D 액션 예측 등 다양한 응용 분야가 존재한다.  
+
 2D HPE 분야에서 최근 비약적인 발전이 있었으나, 3D HPE는 여전히 도전과제로 남아있다.  
-대부분의 현존하는 연구는 3D HPE 문제를 단시점 image or video로부터 접근하는데, 이는 3D를 2D로 투영하며 차원의 손실이 발생한다는 점에서 부적절한 자세 문제 또는 역문제로 여겨진다.  
+대부분의 현존하는 연구는 3D HPE 문제를 단시점 image or video로부터 접근하는데, 이는 3D를 2D로 투영하며 차원의 손실이 발생한다는 점에서 불량조건문제(처음부터 계산이 불가능하거나 매개변수의 값이 약간만 변해도 결과값이 크게 차이나는 문제) 또는 역문제로 여겨진다.  
+다시점이 가능하거나 IMU 또는 LiDAR와 같은 센서가 도입된다면, 3D HPE 문제는 우량조건문제(답이 존재하며 그 답이 유일하게 결정될 수 있는 문제)가 될 수 있다.  
+또다른 한계점은 딥러닝 모델이 엄청난 데이터를 필요로 하며 입력 데이터셋의 품질에 따라 차이가 많이 난다는 것이다.  
+2D 자세 정답값의 경우 정확한 값을 비교적 쉽게 구할 수 있지만, 3D 자세 정답값을 얻는 일은 시간을 많이 소요하며 직접 labeling하기가 현실적으로 어렵다.  
+또한, 데이터셋을 구축할 때 보통 실내 환경에서 제한된 일상적인 행동만을 관찰하기 때문에 한계가 있다.  
+최근의 연구들은 cross-dataset inference를 통해 편향된 데이터셋으로 훈련된 모델이 일반화 능력에 한계가 있음을 보였다.  
+
+### 4.1 monocular 3D HPE
+단안 카메라는 2D 및 3D HPE 모두에서 가장 널리 쓰이는 센서이다.  
+최근 딥러닝 기반 2D HPE 방법의 발전으로 3D HPE까지 연구가 확장되고 있다.  
+구체적으로, 딥러닝 기반 3D HPE 방법은 두가지 카테고리로 나뉜다.  
+
+#### 4.1.1 Single-view 3D HPE
+단안 이미지 또는 비디오에서 3D 인체 자세를 복구하는 것은 자기 가림 문제, 타물체에 의한 가림 문제, depth ambiguities, 데이터 부족으로 인해 매우 복잡한 작업을 요한다.  
+이는 심각한 불량조건 문제이며 각기 다른 3D 인체 자세도 2D로 투사할 경우 같은 자세가 될 수 있다는 문제점이 있다.  
+게다가, 2D 신체 좌표 기반으로 구축된 모델의 경우 2D 신체 좌표를 약간만 조정해도 3D 공간의 자세 왜곡이 크게 일어날 수 있다.  
+single-person에 비해 multi-person은 더더욱 복잡하다.  
+
+- Single-person 3D HPE
+![single-person 3D HPE](./img/sur_single3d.PNG)
+
+위에서 언급한 인체모형 파라미터를 쓰지 않는 Model-Free 기법과 인체모형 파라미터를 사용하는 Model-based 기법으로 나뉜다.  
+
+#### 4.1.2 Multi-view 3D HPE
+다양한 각도의 view를 사용하면, partial occlusion 문제를 크게 개선할 수 있다.  
+이 각도에서는 가리던 부분이 저 각도에서는 보일 수 있기 때문이다.  
+3D multi-view HPE에서는, 각기 다른 카메라 사이의 상응하는 지점에 대한 관계를 먼저 알아내야 한다.(association problem)  
+- G. Pavlakos, X. Zhou, K. G. Derpanis, and K. Daniilidis, “Harvesting multiple views for marker-less 3d human pose annotations,”
+in CVPR, 2017.
+- H. Qiu, C. Wang, J. Wang, N. Wang, and W. Zeng, “Cross view
+fusion for 3d human pose estimation,” in ICCV, 2019.
+- J. Liang and M. C. Lin, “Shape-aware human pose and shape
+reconstruction using multi-view images,” in ICCV, 2019.
+- J. Dong, W. Jiang, Q. Huang, H. Bao, and X. Zhou, “Fast and
+robust multi-person 3d pose estimation from multiple views,” in
+CVPR, 2019.
+- H. Tu, C. Wang, and W. Zeng, “Voxelpose: Towards multi-camera
+3d human pose estimation in wild environment,” in ECCV, 2020.
+
+위 연구들은 association problem을 해결하기 위해 인체 모델의 모델 파라미터를 2D projection 했을때의 2D 자세와 일치하도록 최적화하였다.  
+
+- M. Burenius, J. Sullivan, and S. Carlsson, “3d pictorial structures
+for multiple view articulated pose estimation,” in CVPR, 2013.
+
+널리 사용된 3D pictorial structure model 또한 그런 모델이다.  
+그러나 위 방법은 보통 컴퓨팅 리소스가 많이 들며, 특히 multi-person 세팅일수록 더욱 코스트가 비싸다.  
+
+- H. Rhodin, J. Sporri, I. Katircioglu, V. Constantin, F. Meyer, ¨
+E. Muller, M. Salzmann, and P. Fua, “Learning monocular 3d ¨
+human pose estimation from multi-view images,” in CVPR, 2018
+
+의 경우 처음으로 multi-view consistency constraint를 신경망에 도입하였다. 그러나 이는 3D 훈련 데이터가 굉장히 많이 필요하다. 이를 극복하기 위해, 
+
+- H. Rhodin, M. Salzmann, and P. Fua, “Unsupervised geometryaware representation for 3d human pose estimation,” in ECCV,2018.
+
+encoder-decoder 프레임워크로 geometr-aware 3D latent representation을 학습하고 3D annotation 없이 background segmentation을 학습할 수 있도록 하였다.  
+
+- X. Chen, K. Lin, W. Liu, C. Qian, and L. Lin, “Weakly-supervised
+discovery of geometry-aware representation for 3d human pose
+estimation,” in CVPR, 2019.
+- H. Chen, P. Guo, P. Li, G. H. Lee, and G. Chirikjian, “Multiperson 3d pose estimation in crowded scenes based on multi-view
+geometry,” in ECCV, 2020.
+- R. Mitra, N. B. Gundavarapu, A. Sharma, and A. Jain, “Multiviewconsistent semi-supervised learning for 3d human pose estimation,” in CVPR, 2020.
+- U. Iqbal, P. Molchanov, and J. Kautz, “Weakly-supervised 3d
+human pose learning via multi-view images in the wild,” in
+CVPR, 2020.
+- Y. Zhang, L. An, T. Yu, x. Li, K. Li, and Y. Liu, “4d association
+graph for realtime multi-person motion capture using multiple
+video cameras,” in CVPR, 2020.
+- C. Huang, S. Jiang, Y. Li, Z. Zhang, J. Traish, C. Deng, S. Ferguson,
+and R. Y. D. Xu, “End-to-end dynamic matching network for
+multi-view multi-person 3d pose estimation,” in ECCV, 2020.
+
+위 연구들은 consistency constraints를 이용하여 모든 관점에서 3D 자세를 복원할 수 있는 multi-view matching framework를 제안하였다.  
+
+- Z. Zhang, C. Wang, W. Qiu, W. Qin, and W. Zeng, “Adafuse:
+Adaptive multiview fusion for accurate human pose estimation in
+the wild,” IJCV, 2020.
+
+위 연구는 multi-view 이미지의 2D 키포인트 히트맵을 집약하여 카메라 파라피터 캘리브레이션 기반의 3D pictorial structure model로 만들었다.  
+그러나 이 경우 카메라 세팅이 바뀌면 모델을 다시 훈련해야한다.  
+
+- M. Habermann, W. Xu, M. Zollhoefer, G. Pons-Moll, and
+C. Theobalt, “Deepcap: Monocular human performance capture
+using weak supervision,” in CVPR, 2020.
+
+위 연구는 non-rigid 3d deformation parameter를 추론하여 multi-view 이미지로부터 3d 인체 mesh를 복구하고자 하였다.  
+
+- A. Kadkhodamohammadi and N. Padoy, “A generalizable approach for multi-view 3d human pose regression,” arXiv preprint
+arXiv:1804.10462, 2018.
+- M. Kocabas, S. Karagoz, and E. Akbas, “Self-supervised learning
+of 3d human pose using multi-view geometry,” in CVPR, 2019.
+
+위 연구들은 epipolar geometry를 도입하여 복구한 3D multi-view 자세들을 매칭하고 이를 새로운 카메라 세팅에도 일반화할 수 있도록 하였다.  
+그러나 여기서 cycle consistency constraint를 사용하지 않은 매칭은 3D 자세 복구의 정확성을 보장하지 않는다는 점을 주의해야한다.  
+
+- A. Pirinen, E. Gartner, and C. Sminchisescu, “Domes to drones: ¨
+Self-supervised active triangulation for 3d human pose reconstruction,” in NeurIPS, 2019
+
+위 연구는 self-supervised reinforcement learning 접근 방식을 사용하여 적은 수의 카메라로도 triangulation을 이용하여 3D 자세를 복구하도록 하였다.  
+
+multi-view HPE에서는 정확성도 중요하지만, 가벼운 아키텍처와 빠른 추론 시간, 그리고 카메라 세팅을 바꿀 때 얼마나 효율적으로 바꿀 수 있는지도 중요하게 고려해야한다.  
+
+- L. Chen, H. Ai, R. Chen, Z. Zhuang, and S. Liu, “Cross-view
+tracking for multi-human 3d pose estimation at over 100 fps,” in
+CVPR, 2020.
+
+위 연구의 경우 iteratvie processing strategy를 사용하여 각각의 2D 자세를 3D 포즈에 매칭시키고, 3D 포즈는 지속적으로(반복적으로) 업데이트하도록 하였다.  
+앞선 연구들은 카메라 개수에 따라 런타임 시간 초과가 일어날 수 있으나, 이 방법은 선형 시간복잡도를 보장한다.  
+
+- E. Remelli, S. Han, S. Honari, P. Fua, and R. Wang, “Lightweight
+multi-view 3d pose estimation through camera-disentangled
+representation,” in CVPR, 2020.
+
+위 연구는 각 시점의 이미지를 통일된 latent representation으로 인코딩하여 카메라 시점으로부터 피처맵을 분리하였다.  
+이 2D 표현을 GPU 기반 Direct Linear Transform을 이용하여 3D 자세로 리프트업 한다.  
+
+- R. Xie, C. Wang, and Y. Wang, “Metafuse: A pre-trained fusion
+model for human pose estimation,” in CVPR, 2020.
+
+위 연구는 multi-view fusion scheme의 일반화 성능을 높이기 위해 사전모델을 제안하여 새로운 카메라 환경에 적은 데이터셋으로도 용이하게 적용시킬 수 있도록 하였다.  
+또한 이러한 환경 변화 조정을 위한 일반적인 fusion model의 최적 초기값을 찾기 위한 범모델용 메타 학습 프레임워크를 배포하였다.  
+
+### 4.2 3D HPE from other sources
+비록 단안 컬러 카메라를 사용하는 것이 가장 일반적인 방법이지만, 다른 센서(depth sensor, IMUs, radio frequency device)또한 사용할 수 있다.  
+
+- Depth and point cloud sensors: 최근 가성비로 3D vision 분야에서 주목받고 있는 센서이다.  
+depth ambiguity 문제를 완화할 수 있다.  
+
+    - T. Yu, J. Zhao, Z. Zheng, K. Guo, Q. Dai, H. Li, G. Pons-Moll, and
+    Y. Liu, “Doublefusion: Real-time capture of human performances
+    with inner body shapes from a single depth sensor,” IEEE TPAMI,2019.
+    - F. Xiong, B. Zhang, Y. Xiao, Z. Cao, T. Yu, J. Zhou Tianyi, and
+    J. Yuan, “A2j: Anchor-to-joint regression network for 3d articulated pose estimation from a single depth image,” in ICCV, 2019.
+    - A. Kadkhodamohammadi, A. Gangi, M. de Mathelin, and
+    N. Padoy, “A multi-view rgb-d approach for human pose estimation in operating rooms,” in WACV, 2017.
+    - T. Zhi, C. Lassner, T. Tung, C. Stoll, S. G. Narasimhan, and M. Vo,
+    “Texmesh: Reconstructing detailed human texture and geometry
+    from rgb-d video,” in ECCV, 2020.
+    - C. R. Qi, H. Su, K. Mo, and L. J. Guibas, “Pointnet: Deep learning
+    on point sets for 3d classification and segmentation,” in CVPR, 2017.
+    - C. R. Qi, L. Yi, H. Su, and L. J. Guibas, “Pointnet++: Deep
+    hierarchical feature learning on point sets in a metric space,”
+    in NeurIPS, 2017.
+    - H. Jiang, J. Cai, and J. Zheng, “Skeleton-aware 3d human shape
+    reconstruction from point clouds,” in ICCV, 2019.
+    - K. Wang, J. Xie, G. Zhang, L. Liu, and J. Yang, “Sequential 3d
+    human pose and shape estimation from point clouds,” in CVPR, 2020.
+- IMUs : Wearable Inertial Measurement Units로 물체 가림 및 의류로 인한 장애 현상을 피할 수 있다.  
+다만 자이로센서 편향에 의해 발생하는 drift problem이 있을 수 있다.  
+    - T. von Marcard, B. Rosenhahn, M. J. Black, and G. Pons-Moll,
+    “Sparse inertial poser: Automatic 3d human pose estimation from
+    sparse imus,” in Computer Graphics Forum, 2017.
+    - T. von Marcard, R. Henschel, M. J. Black, B. Rosenhahn, and
+    G. Pons-Moll, “Recovering accurate 3d human pose in the wild
+    using imus and a moving camera,” in ECCV, 2018.
+    - Y. Huang, M. Kaufmann, E. Aksan, M. J. Black, O. Hilliges, and
+    G. Pons-Moll, “Deep inertial poser: Learning to reconstruct human
+    pose from sparse inertial measurements in real time,” ACM TOG, 2018.
+    - Z. Zhang, C. Wang, W. Qin, and W. Zeng, “Fusing wearable imus
+    with multi-view images for human pose estimation: A geometric
+    approach,” in CVPR, 2020.
+    - F. Huang, A. Zeng, M. Liu, Q. Lai, and Q. Xu, “Deepfuse: An
+    imu-aware network for real-time 3d human pose estimation from
+    multi-view image,” in WACV, 2020.
+- Radio Frequency Device : RF signal 로 사람의 위치를 특정할 수도 있다.  
+RF 기반 센싱 시스템의 장점은 시각데이터가 아니기 때문에 프라이버시 보호율이 높다는 것이다.  
+그러나 비교적 낮은 공간 해상도 때문에 자세 정확도가 떨어지는 경향이 있다.  
+
+## 5 Datasets and Evaluation Metrics
+
+### 2D HPE 데이터셋
+- 딥러닝 이전 데이터, 현재는 수량 부족 및 종류 부족으로 잘 쓰지 않음
+    - **Buffy Stickmen** : V. Ferrari, M. Marin-Jimenez, and A. Zisserman “Progressive search space reduction for human pose estimation,” in CVPR, 2008.
+    - **ETHZ PASCAL Stickmen** : M. Eichner, V. Ferrari, and S. Zurich, “Better appearance models for pictorial structures.” in BMVC, 2009.
+    - **We are Family** : M. Eichner and V. Ferrari, “We are family: Joint pose estimation of multiple persons,” in ECCV, 2010.
+    - **Video Pose 2** : B. Sapp, D. Weiss, and B. Taskar, “Parsing human motion with stretchable models,” in CVPR, 2011.
+    - **Sync. Activities** : M. Eichner and V. Ferrari, “Human pose co-estimation and applications,” IEEE TPAMI, 2012
+    - **PASCAL Person Layout** : M. Everingham, L. Van Gool, C. K. Williams, J. Winn, andA. Zisserman, “The pascal visual object classes (voc) challenge,” IJCV, 2010.
+    - **Sport** : Y. Wang, D. Tran, and Z. Liao, “Learning hierarchical poselets for human parsing,” in CVPR, 2011.
+    - **UIUC people** : L.-J. Li and L. Fei-Fei, “What, where and who? classifying events by scene and object recognition,” in ICCV, 2007.
+- 딥러닝 이후
+    ![dataset_2d](./img/sur_ds2d.PNG)
+    - **Frames Labeled in Cinema(FLIC)** : 할리우드 영화의 이미지.
+     https://bensapp.github.io/flic-dataset.html
+    - **Leeds Sports Pose(LSP)** : Flickr 커뮤니티 내의 스포츠 이미지.
+     https://sam.johnson.io/research/lsp.html
+    - **Max Planck Institute for Informatics (MPII) Human Pose Dataset** : articulated HPE의 유명한 데이터셋  
+     http://human-pose.mpi-inf.mpg.de/#
+    - **Microsoft Common Objects in Context (COCO)** : 가장 널리 쓰이는 대용량 데이터셋이며, object detection, image segmentation task에도 쓰임. 연도별로 여러 종류가 존재한다.  
+     https://cocodataset.org/#home
+    - **AI Challenger Human Keypoint Detection (AIC-HKD)** : 2D HPE 데이터셋 중 가장 큰 용량의 훈련데이터. 인터넷 검색 엔진을 통해 수집, 일상 자세 중심.
+     https://challenger.ai/
+    - **CrowdPose Dataset** : 최신 데이터셋으로 붐비고 가림이 심한 상황에 초점을 맞춘 데이터셋. 
+     https://github.com/Jeff-sjtu/CrowdPose
+    - **Pen Action Dataset** : 스포츠 관련 동작이며 Amazon Mechanical Turk를 이용하여 라벨링함  
+     http://dreamdragon.github.io/PennAction/
+    - **Joint-annotated Human Motion Database (J-HMDB)** : 일상생활 & 가벼운 운동 동작
+     http://jhmdb.is.tue.mpg.de/
+    - **PoseTrack Dataset** : multi-person HPE를 위한 대용량 데이터셋
+     https://posetrack.net/
+
+### 2D HPE 평가지표
+- Percentatge of Correct Parts (PCP)
+- Percentage of Correct Keypoints (PCK)
+- Average Precision (AP) and Average Recall (AR)
+
+### 3D HPE 데이터셋
+![dataset_3d](./img/sur_ds3d.PNG)
+- **HumanEva** : 7편의 캘리브레이션 된 비디오  
+http://humaneva.is.tue.mpg.de/
+- **Human3.6M** : 가장 널리 쓰이는 실내 데이터셋  
+http://vision.imar.ro/human3.6m/
+- **MPI-ING-3DHP** : 복잡한 운동 동작, 동적인 행동 위주  
+http://gvv.mpi-inf.mpg.de/3dhp-dataset/
+- **TotalCapture Dataset**  : 걷기, 뛰기, 프리스타일 등의 일상 동작
+https://cvssp.org/data/totalcapture/
+- **CMU Panoptic Dataset** : 마커리스 모션캡처 시스템을 따랐다.  
+domedb.perception.cs.cmu.edu/
+- **3DPW Dataset** : 쇼핑, 계단, 버스타기 등 일상 생활 동작 위주  
+https://virtualhumans.mpi-inf.mpg.de/3DPW/
+- **MuCo-3DHP Dataset** : MPI-INF-3DHP과 3D 정답값을 합치고 Data augmentation 수행  
+http://gvv.mpi-inf.mpg.de/projects/SingleShotMultiPerson/
+- **MuPoTS-3D Dataset** : 5가지 실내상황과 15가지 실외 상황 반영. occlusion 등 난이도 있는 상황 데이터 존재  
+http://gvv.mpi-inf.mpg.de/projects/SingleShotMultiPerson/
+- **AMASS Dataset** : SMPL 모델로 인체 동작을 표현한 대용량 데이터셋  
+https://amass.is.tue.mpg.de/
+- **NBA2K Dataset** : NBA2K19라는 비디오 게임에서 얻은 이미지  
+https://github.com/luyangzhu/NBA2K-dataset
+- **GTA-IM Dataset** : GTA 비디오 게임에서 얻은 이미지  
+https://people.eecs.berkeley.edu/∼zhecao/hmp/
+- **Occlusion-Person Dataset** : occlusion에 초점을 맞춘 데이터셋
+https://github.com/zhezh/occlusion_person
+
+### 3D HPE 평가지표
+- MPJPE (Mean Per Joint Position Error)
+- PMPJPE (Reconstruction Error)
+- NMPJPE : normalized MPJPE
+- MPVE (Mean Per Vertex Error)
+- 3DPCK (3D Percentage of Correct Keypoint)
+
+### 주요 학회 및 challenge
+|이름|상세|url|
+|-----|-----------------|-------------------------------------------|
+| ICCV 2017 | PoseTrack Challenge |https://posetrack.net/workshops/iccv2017|
+| ECCV 2018 | PoseTrack Challenge: Articulated People Tracking in the Wild | https://posetrack.net/workshops/eccv2018/|
+| CVPR 2018 | 3D humans 2018: 1st International workshop on Human pose, motion, activities and shape |https://project.inria.fr/humans2018/#|
+| CVPR 2019 | 3D humans 2019: 2nd International workshop on Human pose, motion, activities and shape |https://sites.google.com/view/humans3d/|
+| CVPR 2019 | Workshop On Augmented Human: Human-centric Understanding |https://vuhcs.github.io/vuhcs-2019/index.html|
+| CVPR 2020 | Towards Human-Centric Image/Video Synthesis |https://vuhcs.github.io/|
+| ECCV 2020 | 3D poses in the wild challenge |https://virtualhumans.mpi-inf.mpg.de/3DPW Challenge/|
+| ACM Multimedia 2020 | Large-scale Human-centric Video Analysis in Complex Events |http://humaninevents.org/|
+
+## 6. Application
+### Action recognition, prediction, detection, tracking
+- F. Angelini, Z. Fu, Y. Long, L. Shao, and S. M. Naqvi, “Actionxpose:
+A novel 2d multi-view pose-based algorithm for real-time human
+action recognition,” arXiv preprint arXiv:1810.12126, 2018.
+- S. Yan, Y. Xiong, and D. Lin, “Spatial temporal graph convolutional
+networks for skeleton-based action recognition,” in AAAI, 2018.
+- A. Markovitz, G. Sharir, I. Friedman, L. Zelnik-Manor, and S. Avidan, “Graph embedded pose clustering for anomaly detection,”
+in CVPR, 2020.
+- J. J. Sun, J. Zhao, L.-C. Chen, F. Schroff, H. Adam, and T. Liu,
+“View-invariant probabilistic embedding for human pose,” in
+ECCV, 2020.
+- S. Das, S. Sharma, R. Dai, F. Bremond, and M. Thonnat, “Vpn: ´
+Learning video-pose embedding for activities of daily living,” in
+ECCV, 2020.
+
+### Action correction and online coaching
+- J. Wang, K. Qiu, H. Peng, J. Fu, and J. Zhu, “Ai coach: Deep human
+pose estimation and analysis for personalized athletic training
+assistance,” in ACM MM, 2019.
+
+### Clothes parsing
+- Y. Li, C. Huang, and C. C. Loy, “Dense intrinsic appearance flow
+for human pose transfer,” in CVPR, 2019.
+- C. Patel, Z. Liao, and G. Pons-Moll, “Tailornet: Predicting clothing
+in 3d as a function of human pose, shape and garment style,” in
+CVPR, 2020.
+
+### Animation, movie, game
+- N. S. Willett, H. V. Shin, Z. Jin, W. Li, and A. Finkelstein,
+“Pose2pose: pose selection and transfer for 2d character animation,”
+in IUI, 2020.
+- J. Liu, H. Fu, and C.-L. Tai, “Posetween: Pose-driven tween
+animation,” in ACM Symposium on User Interface Software and
+Technology, 2020.
+
+### AR / VR
+- C. Weng, B. Curless, and I. Kemelmacher-Shlizerman, “Photo
+wake-up: 3d character animation from a single photo,” in CVPR, 2019.
+- H. Zhang, C. Sciutto, M. Agrawala, and K. Fatahalian, “Vid2player:
+Controllable video sprites that behave and appear like professional
+tennis players,” arXiv preprint arXiv:2008.04524, 2020.
+
+### Healthcare
+- M. Lu, K. Poston, A. Pfefferbaum, E. V. Sullivan, L. Fei-Fei, K. M.
+Pohl, J. C. Niebles, and E. Adeli, “Vision-based estimation of mdsupdrs gait scores for assessing parkinson’s disease motor severity,”
+arXiv preprint arXiv:2007.08920, 2020.
+- Y. Gu, S. Pandit, E. Saraee, T. Nordahl, T. Ellis, and M. Betke,
+“Home-based physical therapy with an interactive computer vision
+system,” in ICCV Workshops, 2019.
+- W. Chen, Z. Jiang, H. Guo, and X. Ni, “Fall detection based on
+key points of human-skeleton using openpose,” Symmetry, 2020.
+- K. Chen, P. Gabriel, A. Alasfour, C. Gong, W. K. Doyle, O. Devinsky, D. Friedman, P. Dugan, L. Melloni, T. Thesen et al., “Patientspecific pose estimation in clinical environments,” JTEHM, 2018
+
+## 7. 결론 및 제언
+미래에 나아갈 수 있는 방향 몇가지.
+- HPE의 Domain adaptation : 신생아 또는 미술작품 내의 human pose annotation data는 그리 많지 않다. 이러한 도메인 갭을 줄이기 위한 최근의 경향은 GAN-based learning 접근방식을 사용하는 것이다.
+- SMPL, SMPLify, SMPL-X, GHUM & GHUML, Adam과 같은 인체 모형은 mesh 표현법을 사용한다. mesh의 퀄리티는 유지하면서 파라미터 수를 줄일 방법이 절실히 요구된다. 또한, 사람들은 각기 다른 체형과 움직임을 가진다. 더 효율적으로 이를 반영하기 위해 BMI 지수 또는 실루엣을 반영할 필요가 있다.  
+- 현재 3D 상황에서는 대부분 사람들 사이의 상호작용 상황을 무시하고 있다. 이에 대한 연구가 더 필요하다.  
+- MPJPE와 같은 평가지표는 움직임의 부드러움, 현실성과 같은 요소는 고려하지 않는다. 더 좋은 평가지표가 필요하다.  
+- 현재 대부분의 데이터셋은 고화질 이미지이기 때문에 이들로 훈련된 모델은 저화질 인풋에 대해 제대로 동작하지 않을 우려가 있다. contrastive learning scheme 등을 도입하여 개선할 여지가 있는 듯 보인다.  
+- DNN은 adversarial attack에 약하다. 약간의 노이즈가 심각한 결함으로 이어질 수 있다.  
+
