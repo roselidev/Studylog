@@ -158,5 +158,26 @@
              ports:
              - containerPort: 80
         ```
-    - **ReplicaSet**
-        
+    - **ReplicaSet**  
+        애플리케이션의 scaling을 도와준다.  
+        YAML 파일에 유지할 Pod의 개수를 정의하면 그대로 유지하기 위해 삭제 또는 복제 작업을 수행한다.  
+        Deployment를 생성할 때 자동으로 하나가 생기므로 수동으로 YAML파일을 사용할 필요는 없다.  
+    - **Autoscaling**  
+        Horizontal Pod Autoscaler(HPA)를 사용하여 min, max 값 사이로 Pod 개수의 범위를 지정할 수도 있다.  
+    - **Rolling Updates**  
+        자동으로 제어되는 애플리케이션의 변경사항을 롤백/롤아웃할 수 있음.
+    - **ConfigMaps**  
+        포트번호, 에러메시지 등 환경변수를 하드코딩하지 않도록 따로 저장한다.  
+        서로 다른 deployment에 재사용할 수 있다.  
+        string literal, key value file, YAML 파일을 통해 만들 수 있다.  
+        - string literal :   
+        Configmap 만들기 : `kubectl create configmap my-config --from-literal=MESSAGE="hello"`  
+        Configmap ls : `kubectl get configmaps`  
+        Configmap 상세보기 : `kubectl describe configmap my-config`  
+        - file :  
+        Configmap 만들기 : `k create cm my-config --from-file=myconfig.txt`   
+    - **Secrets**  
+        API 크레딧 번호 등의 정보를 저장할 때 사용할 수 있음.  
+        ConfigMap과 비슷하지만 `kubectl describe`에서 정보가 표시되지 않음
+    - **Service binding**  
+        외부 서비스와 연동할 수 있음
