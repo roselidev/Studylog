@@ -1,4 +1,4 @@
-# Introduction to Containers w/ Docker, Kubernetes & OpenShift
+# Introduction to Containers w/ Docker, Kubernetes
 [Coursera Lecture](https://www.coursera.org/learn/ibm-containers-docker-kubernetes-openshift/home/welcome)
 
 ## Why Learn This?
