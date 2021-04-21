@@ -116,7 +116,7 @@
         - Nodes : computing resource usually provided by cloud provider
             - worker machine
             - control plane에 의해 관리됨
-            - Kubelet : API 서버와 소통하며 Pods를 받고 Pods가 ㄱ잘 작동하는지 감시하며 주기적으로 control plane에 status 와 health 전송
+            - Kubelet : API 서버와 소통하며 Pods를 받고 Pods가 잘 작동하는지 감시하며 주기적으로 control plane에 status 와 health 전송
             - Container runtime Interface : Docker, rkt, CRI-O등의 컨테이너 런타임을 adopt할 수 있음
             - Kube-proxy : Pods와 소통하는 네트워크 규칙 정비
 
