@@ -3,31 +3,21 @@ import time
 import random
 
 # O(n*lg(n))
-def merge(A, B):
-    i = 0
-    j = 0
-    ret = []
-    while i < len(A) and j < len(B):
-        if A[i] < B[j]:
-            ret.append(A[i])
-            i += 1
-        else:
-            ret.append(B[j])
-            j += 1
-    while i < len(A):
-        ret.append(A[i])
-        i += 1
-    while j < len(B):
-        ret.append(B[j])
-        j += 1
-    return ret
+def partition(A, pivot):
+    smaller = []
+    larger = []
+    for i in A:
+        if i <= pivot:
+            smaller.append(i)
+        else: 
+            larger.append(i)
+    return smaller + [pivot] + larger, len(smaller)
 
-def merge_sort(A):
+def quick_sort(A):
     if len(A) <= 1 : return A
-    m = round(len(A)/2)
-    B = merge_sort(A[0:m])
-    C = merge_sort(A[m:len(A)])
-    return merge(B, C)
+    pivot = A[-1]
+    A, index = partition(A[0:-1], pivot)
+    return quick_sort(A[:index]) + quick_sort(A[index:])
 
 def compare(arr):
     A = [3, 31, 48, 73, 8, 11, 20, 29, 65, 15] if arr == None else arr
@@ -35,7 +25,7 @@ def compare(arr):
 
     ### My merge sort
     s_time = time.time()
-    A = merge_sort(A)
+    A = quick_sort(A)
     m_time = time.time() - s_time
 
     ### Python default sort

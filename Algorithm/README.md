@@ -17,10 +17,10 @@ Source : 쉽게 배우는 알고리즘 2020년 개정판 - 문병로
 - [bubble sort](https://github.com/roselidev/Studylog/blob/master/Algorithm/bubble_sort.py)
 - [insertion sort](https://github.com/roselidev/Studylog/blob/master/Algorithm/insertion_sort.py)
 - [merge sort](https://github.com/roselidev/Studylog/blob/master/Algorithm/merge_sort.py)
-- quick sort
-- heap sort
-- radix sort
-- counting sort
+- [quick sort](https://github.com/roselidev/Studylog/blob/master/Algorithm/quick_sort.py)
+- [heap sort](https://github.com/roselidev/Studylog/blob/master/Algorithm/heap_sort.py)
+- [radix sort]()
+- [counting sort]()
 ## Chapter 5. 선택
 ## Chapter 6. 검색
 ## Chapter 7. 해시테이블
