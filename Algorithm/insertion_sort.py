@@ -27,7 +27,7 @@ def insertion_sort(arr=None):
     else:
         print("Incorrect")
 
-    if s_time > d_time:
+    if m_time > d_time:
         print("Faster")
     else:
         print("Slower")
