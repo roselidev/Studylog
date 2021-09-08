@@ -53,3 +53,73 @@ low rank matrix 공식과 L1-norm 기반의 robust factorization 기술을 이�
 우리는 우리의 기술을 다양한 데이터셋에 적용하였다.  
 유명 여행지의 이미지 컬렉션과 셀러브리티들에 대한 이미지 컬렉션도 포함한다.  
 우리는 또한 color correction과 color transfer이 크리우드 소싱된 이미지로 수행한 image stitching, multi-view stereo, image-based rendering 작업의 성능도 높였음을 보인다. 
+
+## 관련 연구
+
+### Single Image Methods
+색보정의 가장 흔한 방법 중 하나는 참조 이미지의 흰색 물체를 이용하여 다른 이미지의 화이트 밸런스를 조정하는 것이다.  
+최신 기술을 이용하면 빛과 색간의 통계적 관계를 이용하여 장면의 조광을 분석하고 화이트 밸런스 보정에 이용할 수 있다.  
+이 방법은 자동이긴 하지만 하나의 이미지를 보정하는 것에 초점이 맞춰져있고 여러개의 비슷한 이미지에 대하여 일관성 보정을 하는 작업에 부적합하다.  
+
+이 외에도 색조값을 조정하는 사용자 상호작용 기반 시스템이 있지만 대량의 이미지 작업에는 부적절하다.  
+
+### Batch Methods
+대용량 이미지 컬렉션에 쓰이는 자동 색보정 방식이 몇 가지 있다.  
+Garg et al.은 scene appearance가 종종 낮은 차원을 가지는 것을 보고 색보정에 응용하였다.  
+Laffond et al.은 coherent instrinsic 이미지들을 분석하여 decomposed layer로 조명 표현을 전이하였다.  
+Diaz et al.은 empirical prior on camera response function을 가지고 batch radiometric calibration을 수행하였다.  
+Shi et al.은 비선형 camera response의 효과를 shape prior로 조정하였다.  
+Kim and Pollefeys는 radiometric  calibration에 decoupled scheme을 적용하였다.  
+위 연구들과 달리, 우리의 연구는 surface normal, dense 3D model 없이 오직 sparse correspondence 값만 필요로 한다.  
+게다가, non-rigid scene 또한 해결할 수 있다. rigid scene에서 선택적으로 SfM 기법을 이용하여 더욱 정확한 correspondence를 얻을 수 있다.  
+
+보다 일반적인 장면에서는 주로 NRDC 알고리즘이 쓰여 선형 color transform을 수행하였다.  
+HaCohen은 이러한 방식으로 참조 이미지의 색상을 이미지 컬렉션 전체로 전파하는 연구를 하였다.  
+이렇게 하려면 three piecewise-quadratic splines에 대한 최적 파라미터 분석을 수행해야 하는데, 이를 수행하면 모든 correspondence의 색차가 최소화된다.  
+그러나, quadratic energy formulation이 매칭 시 오차에 민감하기 때문에 정밀하고 dense 한 correspondence를 구하는 것이 중요하다. 이 컴퓨팅 비용이 비싼 알고리즘 중 하나가 NRDC이며, 이 때문에 그의 연구는 대용량 이미지 컬렉션에 부적합하다.  
+
+NRDC로 복구한 고품질 correspondence를 쓰는 것 대신, 우리의 연구는 sparse correspondence를 이용하며 이는 또한 에러에도 덜 민감하다. 이는 내재되어 있는 robust optimization 구조 때문이다.  
+연구에 의하면 NRDC는 865 이미지의 매칭 그래프를 구축하는 데에 MacBook Pro (2.3 Ghz Core i7 CPU 8G RAM) 환경에서 6시간 이상 소요되었다.  
+반면, 우리의 방법은 TREVI FOUNTAIN 데이터셋(1500장)에 대하여 feature matching 과 SfM을 수행하는데 데스크탑 PC 환경(Intel i7-4790 CPU @ 3.6GHz, 16G RAM)에서 50분이 걸렸다.  
+
+## Color Correction Model
+간단한 색보정 모델을 도입하였다. 그 모델은 다음과 같은 수식을 따른다.  
+
+I' = (cI)^r
+
+I'는 입력 이미지, c는 화이트 밸런스 함수에 해당하는 scale factor, r은 비선형 감마 함수이다.  
+위 수식은 각 색상 채널에 대하여 독립적으로 계산된다.  
+
+## Matrix Factorization-based Formulation
+![matrix_factorization_algo](img/matfact.PNG)
+
+## 구현 상세
+sparse correspondence를 복구하는 방법과 observation matrix I를 구성하는 방법을 설명한다.  
+
+- SfM pre-processing  
+    풍경이나 일반적인 rigid scene에서는 scale invariant feature matching과 structure from motion(SfM)을 이용하여 multi-image correspondences를 구한다.  
+    비록 계산된 sparse 3D reconstruction 정보는 사용되지는 않지만 SfM 파이프라인을 거치며 이상치를 효율적으로 제거하고 많은 이미지들에 대해 geometrically consistence한 globally optimized correspondences를 얻을 수 있다.  
+- Non-rigid scenes  
+    이러한 입력 이미지에 대하여는, SIFT 특징 벡터를 추출하고 nearest neighbor (NN) secriptor matching을 이미지 페어에 대하여 수행한다.  
+    각각의 이미지 페어에 양방향으로 매칭하며 해당 매치를 reciprocal nearest neighbors를 위해 보존한다.  
+    그 다음, SIFT 특징을 점으로 하는 무방향 매치 그래프를 구성하여 크기가 3 이상인 maximal cliques를 찾는다.  
+    Bron-Kerbosch 알고리즘을 이용하여 maximal clique가 계산되면 이것이 corespondence이다.  
+- observation matrix I
+    매칭된 키포인트들의 크기와 방향을 이용하여 30*30 픽셀 크기의 패치를 리샘플한다.  
+    이 패치들의 intensities를 샘플링하여 I를 만든다.  
+- Data Augmentation
+    feature match가 적은 장면들의 경우 observation이 적기 때문에 추가적인 pixel을 sample하여 augmentation을 수행한다.  
+
+## 실험 결과
+- Robustness
+    ![robust](img/robust.PNG)
+- Error Distribution
+    ![error](img/error.PNG)
+
+## 한계
+본 접근방식은 HaCohen과 같이, 입력 이미지가 비슷하지 않은 경우 효과가 없을 수 있다.  
+또한, 조명이 급격하게 변화하는 입력 이미지 컬렉션에 대해 덜 효과적일 수 있다. 예를 들면 낮과 밤 사진 등이 있다.  
+또한 어두운 이미지를 모델을 이용해 조금 더 밝게 보정하는 경우 사진 내의 밝은 부분이 saturated 될 수 있다.  
+
+## Conclusion
+우리의 핵심 기여는 새로운 rank-2 formulation 솔루션을 제공하였으며 robust한 matrix factorization-based 기술을 제안하였다는 것이다.  
