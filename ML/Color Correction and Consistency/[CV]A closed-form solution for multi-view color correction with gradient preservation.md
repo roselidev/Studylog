@@ -21,7 +21,7 @@ global color optimization을 위하여, 기존의 방법은 선형 함수 또는
 그렇지 않으면 아래 사진과 같이 보기 좋지 않은 색차가 발생하게 된다.  
 아래 그림은 seamless 보정을 거쳤지만 확연한 색 차이를 보여주고 있다.  
 
-![color decr](img/badex.PNG)
+![color decr](../img/badex.PNG)
 
 본고에서 우리는 multiview image mosaicking에 활용될 색보정 문제를 다룰 것이다.  
 무엇보다 우리는 우리가 여전히 quadratic spine curve를 색보정 모델로 사용하고자 함을 명확히 한다.  
@@ -76,7 +76,7 @@ photo editing research에서, HaCohen et al(2013)이 quadratic spline을 직접�
 본고의 색보정 방법에서 입력이 되는 이미지 컬렉션은 각각이 최소 1개 이상의 overlapping하는 이미지를 갖고 있어야 한다.  
 즉, 모든 이미지들은 기하학적으로 상응이 되어 가까운 관계의 이미지 및 대응하는 overlap 구역이 known information으로 사용될 수 있어야 한다.  
 
-![overlap](img/overlap.PNG)
+![overlap](../img/overlap.PNG)
 
 우리의 목적은 이미지들 사이의 색차를 없애면서 기존의 detail은 살리는 것이다.  
 
@@ -91,7 +91,7 @@ y축은 remapped intensity value를 의미하여 모델 파라미터로서 동�
 마지막으로, 미분 가능한 오차 함수를 convex quadratic programming으로 풀어 학습한다.  
 
 ## 색보정 방법
-![CC pipeline](img/ccpipe.PNG)
+![CC pipeline](../img/ccpipe.PNG)
 
 본고의 접근 방법은 2단계로 이루어져 있다.  
 데이터 준비 단계에서 color correspondence 및 spatial gradient statistics를 계산하고, 모델 최적화 단계에서 remapping curve를 최적화 한다.  
@@ -114,10 +114,10 @@ N개의 이미지에 대하여 N개의 색상 변환식을 분석할 것이다.
 우리의 접근방식으로, remapping curve는 YCbCr 공간의 Y, Cb, Cr 각 채널에 대하여 독립적으로 최적화 된다.  
 각 채널에 대하여 오차함수는 w_ij가 weight이고 그 값은 두 이미지의 겹치느 ㄴ구간과 비례하게 설정될 때 
 
-![loss](img/ccloss.PNG)
+![loss](../img/ccloss.PNG)
 
 이다.  
 
 이미지들의 color consistency를 분석하기 위하여 왜곡을 오차로 간주하는 color term을 아래와 같이 정의한다.  
 
-![metric](img/color_term.PNG)
+![metric](../img/color_term.PNG)

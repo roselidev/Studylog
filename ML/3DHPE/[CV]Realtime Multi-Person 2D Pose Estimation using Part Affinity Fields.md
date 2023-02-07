@@ -41,7 +41,7 @@ early commitment란 말인즉, 인체 탐지기는 사람 사이의 거리가 �
 또한 소모되는 컴퓨팅 리소스에 비해 greedy parse가 고품질의 성과를 달성한다는 것을 보일 것이다.  
 
 ## Method
-![open_pose_process](./img/op_process.PNG)
+![open_pose_process](./../img/op_process.PNG)
 
 위 그림은 본고에서 소개하는 방법의 전반적인 파이프라인을 도식화한 것이다.  
 
@@ -53,7 +53,7 @@ early commitment란 말인즉, 인체 탐지기는 사람 사이의 거리가 �
 ### 동시 신체 탐지 및 자세 인식 Simulataneous Detection and Association
 모델 아키텍처
 
-![open_pose_architecture](./img/op_architecture.PNG)
+![open_pose_architecture](./../img/op_architecture.PNG)
 
 아키텍처 내부는 두갈래로 나뉘어 각각 confidence maps 와 affinity fields를 추론한다.  
 위쪽 베이지색이 confidence maps를, 아래쪽 파란색이 affinity fields를 추론한다.  
@@ -92,7 +92,7 @@ Part Affinity는 각 신체부위의 2D vector field이며, 각 신체부위에 
 
 예를 들어, 
 
-![op_affinity_field](./img/op_affinity_field.PNG)
+![op_affinity_field](./../img/op_affinity_field.PNG)
 
 Affinity field 의 정답값인 L*_{c,k}(p)의 값은 x_{j1,k}에서 x_{j2,k}로의 방향 정보를 담은 unit vector이다. 이유는 p가 팔이라는 신체 부위 위의 점이기 때문이다.  
 팔 이외 모든 이미지상의 pixel은 affinity field 에서 zero-valued vector이다.
@@ -132,7 +132,7 @@ Hungarian algorithm을 통해 최적 매칭을 찾을 수 있다.
 
 위 두가지 완화조건을 통해 최적화는 다음과 같이 간단히 정리된다.  
 
-![op_opt_full_body](./img/op_opt_full_body.PNG)
+![op_opt_full_body](./../img/op_opt_full_body.PNG)
 
 이제 위 식을 이용해 구한 모든 신체부위 연결 후보를 모아 같은 part detection candidates를 다수 사람들의 전신 자체 측정 표현으로 바꾼다.  
 본고의 tree structure에 대한 최적화 비용은 fully connected graph의 최적화보다 10배 이상 빠르다.  
@@ -145,7 +145,7 @@ Hungarian algorithm을 통해 최적 매칭을 찾을 수 있다.
 본고의 모델은 COCO 2016 Challenge에서 SOTA 성능을 달성하였다.  
 또한 MPII 벤치마크에서 이전 SOTA 성능을 월등하게 능가하였다. 
 
-![op_result_mpii](./img/op_result_mpii.PNG)
+![op_result_mpii](./../img/op_result_mpii.PNG)
 
 
 ### Runtime Analysis

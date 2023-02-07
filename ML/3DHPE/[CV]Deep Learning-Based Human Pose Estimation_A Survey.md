@@ -61,7 +61,7 @@ applied in 2D human pose estimation (IEEE, 2020)
 다음 섹션부터 딥러닝 기반 HPE 분야의 발전에 대하여 여러가지 관점에서 분석하고자 한다.  
 먼저 인체 구조 모델링 기법은 다음과 같이 kinematic, planar, volumetric으로 나뉜다.  
 
-![modeling_type](./img/sur_modeling.PNG)
+![modeling_type](./../img/sur_modeling.PNG)
 
 HPE는 크게 2D와 3D로 나뉜다.  
 
@@ -84,7 +84,7 @@ monocular RGB는 또다시 single-view 및 multi-view로 나뉜다.
 
 위에서 정리한 본고의 내용을 도식으로 나타내면 다음과 같다.  
 
-![taxonomy](./img/sur_taxo.PNG)
+![taxonomy](./../img/sur_taxo.PNG)
 
 ## 2. 인체 구조 모델링
 인체의 구조를 모델링하는 것은 HPE의 중요한 측면 중 하나이며, input data로부터 keypoint와 feature를 표현하는 가장 기본적인 토대가 된다.  
@@ -92,7 +92,7 @@ monocular RGB는 또다시 single-view 및 multi-view로 나뉜다.
 인체는 관절과 사지로 이루어진 복잡한 개체이며, 신체 운동학적 구조와 신체 형태 정보를 포함한다.  
 전형적인 방법에서 모델링 기반 접근방식은 인체 자세를 추론하고 2D/3D 자세를 만들어내기 위해 사용되는 접근방식이다.  
 
-![modeling_type](./img/sur_modeling.PNG)
+![modeling_type](./../img/sur_modeling.PNG)
 
 크게 3가지로 나뉘는 이 모델링 타입 중 kinematic은 2D 및 3D HPE에 사용되는 가장 보편적인 모델링이며, planar 타입은 2D에, volumetric 타입은 3D HPE에 사용되는 모델링 방법이다.  
 
@@ -110,19 +110,19 @@ kinematic model은 유연하고 직관적이라는 장점을 가지고 있어 2D
 - Volumetric model : 3D 인체 재구성에 대한 높아지는 관심을 반영하며 많은 인체 모형이 다양한 인체 형태를 반영할 것을 요구하고 있다.  
 여기에서는 딥러닝 기반 3D 자세추정에 쓰이는 몇몇 유명한 3D 인체 모델링에 대하여 논하고자 한다.  
     - [SMPL](https://eehoeskrap.tistory.com/436) : Skinned Multi-Person Linear model. 스킨이 씌워진 vertex-based 모델. (ECCV, 2016)
-    ![SMPL](./img/sur_smpl.PNG)
+    ![SMPL](./../img/sur_smpl.PNG)
     - [DYNA](http://dyna.is.tue.mpg.de/) : Dynamix Human Shape in Motion. 다양한 체형의 현실적인 미세 움직임을 잡아내기 위해 전신 속도와 가속도, 신체부위별 각속도, 및 속도 가속도와 연조직 모양 계수를 사용한다.  
     또한 BMI 지수를 사용하여 체형에 따른 신체 변형을 표현한다. (ACM-TOG, 2015)
-    ![dyna](./img/sur_dyna.PNG)
+    ![dyna](./../img/sur_dyna.PNG)
     - [Stitched Puppet Model](https://www.cv-foundation.org/openaccess/content_cvpr_2015/app/2B_022.pdf) : 부위 기반 그래픽모델이다.  
     각기 다른 3D 체형과 자세에 따른 shape 변수가 해당하는 그래프 노드 표현으로 변환된다.  
     각각의 신체부위는 각기 다른 저차원 state space로 표현되며, 그래프 노드 사이의 pairwise potentials를 기반으로 연결과어 마치 신체부위들을 짜깁기한 것 같은 모양이 완성된다. (CVPR, 2015)
-    ![spm](./img/sur_spm.PNG)
+    ![spm](./../img/sur_spm.PNG)
     - [Frankenstein & Adam](https://arxiv.org/pdf/1801.01615.pdf) : 얼굴 및 손동작까지 자세히 표현하는 모델링. 여러 메쉬를 결합하여 구성한다. 몸은 SMPL을 사용하고, 얼굴에는 FaceWarehouse, 손은 전문가 리깅을 이용하였다. 아담모델은 프란켄슈타인 모델을 대용량 의복 정보를 이용하여 최적화한 모델이다. 아담모델은 머리카락과 의류 위치를 표현할 수 있다는 점에서 현실 조건을 더욱 잘 표현하고 있다. (CVPR, 2018)
-    ![Frankenstein](./img/sur_frank.PNG)
+    ![Frankenstein](./../img/sur_frank.PNG)
     - [GHUM & GHUML(ite)](https://openaccess.thecvf.com/content_CVPR_2020/papers/Xu_GHUM__GHUML_Generative_3D_Human_Shape_and_Articulated_Pose_CVPR_2020_paper.pdf) : a fully trainable end-to-end deep learning pipeline 
     고해상도 전신 바디스캔 정보로 훈련되어 non-linear shape spaces, pose-space deformation correctives, skeleton joint center estimators, blend skinning function 등의 값을 추론할 수 있다.  (CVPR, 2020)
-    ![GHUM](./img/sur_ghum.PNG)
+    ![GHUM](./../img/sur_ghum.PNG)
 
 ## 3. 2D Human Pose Estimation
 2D HPE 방법은 이미지나 비디오에서 신체 주요 keypoint의 2D 위치 또는 공간 위치를 계산하는 방법이다.  
@@ -168,7 +168,7 @@ Top-down 방법은 상용 person detector를 사용하여 이미지 내 각각�
 이와는 달리 bottom-up 방법은 각 신체부위별로 찾을 수 있는 모든 객체를 찾은 다음 그들을 각각의 인체로 연결한다.  
 Top-down 방법에서는 이미지 속 사람의 수가 컴퓨팅 리소스에 직접적인 영향을 끼치므로, 보통 bottom-up 방법이 top-down 방법보다 더 빠르다.  
 
-![topdown bottomup](./img/sur_topbottom.PNG)
+![topdown bottomup](./../img/sur_topbottom.PNG)
 
 #### 3.2.1 Top-down pipeline
 탑다운 방식에는 두가지 중요한 부분이 있다.  
@@ -250,7 +250,7 @@ top-down 및 bottom-up pipeline에 관하여는, 두 방법 모두 널리 쓰이
 single-person에 비해 multi-person은 더더욱 복잡하다.  
 
 - Single-person 3D HPE
-![single-person 3D HPE](./img/sur_single3d.PNG)
+![single-person 3D HPE](./../img/sur_single3d.PNG)
 
 위에서 언급한 인체모형 파라미터를 쓰지 않는 Model-Free 기법과 인체모형 파라미터를 사용하는 Model-based 기법으로 나뉜다.  
 
@@ -413,7 +413,7 @@ RF 기반 센싱 시스템의 장점은 시각데이터가 아니기 때문에 �
     - **Sport** : Y. Wang, D. Tran, and Z. Liao, “Learning hierarchical poselets for human parsing,” in CVPR, 2011.
     - **UIUC people** : L.-J. Li and L. Fei-Fei, “What, where and who? classifying events by scene and object recognition,” in ICCV, 2007.
 - 딥러닝 이후
-    ![dataset_2d](./img/sur_ds2d.PNG)
+    ![dataset_2d](./../img/sur_ds2d.PNG)
     - **Frames Labeled in Cinema(FLIC)** : 할리우드 영화의 이미지.
      https://bensapp.github.io/flic-dataset.html
     - **Leeds Sports Pose(LSP)** : Flickr 커뮤니티 내의 스포츠 이미지.
@@ -439,7 +439,7 @@ RF 기반 센싱 시스템의 장점은 시각데이터가 아니기 때문에 �
 - Average Precision (AP) and Average Recall (AR)
 
 ### 3D HPE 데이터셋
-![dataset_3d](./img/sur_ds3d.PNG)
+![dataset_3d](./../img/sur_ds3d.PNG)
 - **HumanEva** : 7편의 캘리브레이션 된 비디오  
 http://humaneva.is.tue.mpg.de/
 - **Human3.6M** : 가장 널리 쓰이는 실내 데이터셋  

@@ -107,7 +107,7 @@ CNN backbone과 학습 가능 가중치인 θ는 ResNet-152 네트워크(output�
 본고에서는 각 joint j들을 서로에 대해 독립적으로 처리한다.  
 이 방식은 다른 시점에서 얻은 joint j의 백본 히트맵 상의 2D 위치를 삼각 측량하여 구축된다.
 
-![outline_algeb_triangulation](./img/outline_algebraic_triangulation.PNG)
+![outline_algeb_triangulation](./../img/outline_algebraic_triangulation.PNG)
 
 ### Volumetric triangulation approach 체적 삼각 측량법
 baseline 대수 삼각 측량법의 한가지 장애물은 서로 다른 시점의 카메라에서 생산된 이미지가 독립적으로 처리되므로, 3D 자세 사전 확률을 추가하거나 잘못된 projection matrix를 가진 카메라를 filter out 할 방법이 없다는 것이다.  
@@ -127,11 +127,11 @@ baseline 대수 삼각 측량법의 한가지 장애물은 서로 다른 시점�
 
 대수 삼각 측량법의 경우, 오차함수로 soft version of per-joint MSE loss 를 사용하여 극단값에 잘 대비할 수 있도록 하였다.  
 
-![loss_fn_for_alg](./img/loss_alg.PNG)
+![loss_fn_for_alg](./../img/loss_alg.PNG)
 
 볼륨 삼각 측량법의 경우 L1 loss에 약한 히트맵 정규식을 가미하여 정답값을 내포한 voxel 예측치를 극대화하도록 하였다.
 
-![loss_fn_for_vol](./img/loss_vol.PNG)
+![loss_fn_for_vol](./../img/loss_vol.PNG)
 
 우변의 두번째 항이 없으면, 볼륨 히트맵은 해독이 불가능하며 이는 학습데이터가 부족하기 때문인 것으로 사료된다. 베타값을 충분히 작게 (0.01) 하면 해독이 가능하며, 이는 산출된 히트맵이 항상 현저한 최고점에 근접한 예측치를 갖기 때문이다.  
 동시에 그렇게 작은 베타값은 최종 성과 지표에 별 영향이 없으므로 해독이 필요없다면 사용하지 않아도 상관 없다.
@@ -145,13 +145,13 @@ baseline 대수 삼각 측량법의 한가지 장애물은 서로 다른 시점�
 비디오 프레임마다 grid-sampling을 적용하여 이미지 왜곡을 없앴다.  
 다른 언급이 없다면 모든 신경망은 4개의 카메라를 이용하여 훈련하였다.  
 
-![human36result](./img/human36result.PNG)
+![human36result](./../img/human36result.PNG)
 위는 골반에 대한 MPJPE error 값 비교표이며 본고가 SOTA 성능을 달성하였다.
 
 ### CMU Panoptic data
 이는 CMU에서 제공하는 새로운 다시점 데이터이다.
 
-![cmuresult](./img/cmuresult.PNG)
+![cmuresult](./../img/cmuresult.PNG)
 
 ## Conclusion
 이 접근방식의 주요 한계 중 하나는 화면 당 한 사람만 지원한다는 것이다.  

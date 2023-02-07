@@ -91,7 +91,7 @@ I'는 입력 이미지, c는 화이트 밸런스 함수에 해당하는 scale fa
 위 수식은 각 색상 채널에 대하여 독립적으로 계산된다.  
 
 ## Matrix Factorization-based Formulation
-![matrix_factorization_algo](img/matfact.PNG)
+![matrix_factorization_algo](../img/matfact.PNG)
 
 ## 구현 상세
 sparse correspondence를 복구하는 방법과 observation matrix I를 구성하는 방법을 설명한다.  
@@ -112,9 +112,9 @@ sparse correspondence를 복구하는 방법과 observation matrix I를 구성�
 
 ## 실험 결과
 - Robustness
-    ![robust](img/robust.PNG)
+    ![robust](../img/robust.PNG)
 - Error Distribution
-    ![error](img/error.PNG)
+    ![error](../img/error.PNG)
 
 ## 한계
 본 접근방식은 HaCohen과 같이, 입력 이미지가 비슷하지 않은 경우 효과가 없을 수 있다.  

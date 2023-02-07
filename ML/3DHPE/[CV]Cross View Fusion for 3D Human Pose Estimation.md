@@ -33,7 +33,7 @@ PSM은 추정된 3D 자세와 2D 자세의 projection error, 그리고 좌표들
 이 방법을 사용하면 2D 히트맵 퓨전 과정에서 다른 시점 간 상응하는 위치를 찾는 문제도 자연스럽게 해결된다.  
 위 방법의 구현은 아래와 같은 구조의 fusion neural network를 이용하여 이루어진다.  
 
-![cross_fig1](./img/cross_fig1.PNG)
+![cross_fig1](./../../img/cross_fig1.PNG)
 
 둘째, Recursive pictorial Structure Model을 이용하여 추정한 다시점 2D 히트맵으로부터 3D 자세를 복원한다.  
 quantization error를 해결하기 위해서 공간을 한 번에 많은 수의 bin으로 이산화해야 하는 기존 PSM 방법과 달리, RPSM은 (이전 step에서 추정한) 각 좌표 위치 주변의 공간을 반복적으로 더 잘게 이산화하기 때문에, 결과적으로 각 step마다 3D 자세의 정확도가 점차 높아진다.  
@@ -88,7 +88,7 @@ Amin et al.은 다시점 이미지들 사이의 기하학적 관계를 탐색하
 이 과정은 하나의 CNN으로 종단간 미분가능하도록 구현할 수 있다.  
 아래 그림은 2-view fusion을 도식화 한 것이다.  
 
-![cross_fig1](./img/cross_fig1.PNG)
+![cross_fig1](./../../img/cross_fig1.PNG)
 
 2-view fusion이 해결되면 multi-view로 확장하는 것은 trivial 한 문제이다.  
 본고의 fusion approach의 핵심은 두 개의 서로 다른 시점 사이에 서로 상응하는 특징을 찾아내는 것이다.  
@@ -96,12 +96,12 @@ Amin et al.은 다시점 이미지들 사이의 기하학적 관계를 탐색하
 3D 공간 상에 좌표 P가 있다고 가정하자.  
 아래 그림을 보면, 
 
-![cross_fig2](./img/cross_fig2.PNG)
+![cross_fig2](./../../img/cross_fig2.PNG)
 이 때, 좌표 P를 view u와 view v에 투영한 2차원 좌표인 Y_u와 Y_v는 각각 view_u 및 view_v의 전체 픽셀 위치 중 한 원소이다.  
 히트맵 F)u와 F_v는 각각 view_u와 view_v의 모든 2차원 좌표에 해당하는 heat 값의 집합이다.  
 특징 융합의 핵심 아이디어는 view_u에서 히트맵 F_u의 한 점 x_i가, 히트맵 F_v의 특징들과 융합할 때, 다음과 같은 관계가 성립한다는 것이다.  
 
-![cross_math1](./img/cross_math1.PNG)
+![cross_math1](./../../img/cross_math1.PNG)
 
 여기서 w_j,i는 결정된 스칼라값이다.  
 이상적으로, 각 i에 대하여 단 하나의 w_j,i만이 positive하며, 나머지는 모두 zero이다.  
@@ -121,7 +121,7 @@ w_j,i는 view_u 안의 픽셀 i와 view_j안의 픽셀 j가 같은 3D 좌표에 
 위 특징 융합 수식은 자세 히트맵의 각 채널에 대해 수행하는 FC layer 연산으로 치환할 수 있다. (w가 학습 파라미터)  
 아래 그림이 이 아이디어를 도식화한 것이다.  
 
-![cross_fig3](./img/cross_fig3.PNG)
+![cross_fig3](./../../img/cross_fig3.PNG)
 
 피쳐맵(히트맵)의 각 채널이라 함은 각각의 관절에 대응하며, cross view 관계식은 관절이 아닌 카메라 시점에 영향을 받으므로 각 채널(관절) 히트맵은 동일한 가중치를 가진다.  
 특징 융합을 신경망 연산으로 치환함으로써 종단간 미분가능한 가중치 학습을 수행할 수 있게 된다.  
@@ -155,7 +155,7 @@ cross view fusion 신경망을 학습할때, 걸러낸 관절값에 대하여는
 #### Pictorial Structure Model
 3D 자세 J와 다시점 2D 자세 히트맵 F가 주어졌을 때, 사후확률은 다음과 같다.  
 
-![cross_math2](./img/cross_math2.PNG)
+![cross_math2](./../../img/cross_math2.PNG)
 
 Z(F)는 정규화 상수이며 E는 두 변수 사이를 잇는 선분을 나타낸다.  
 단항 포텐셜 φ_conf는 이전에 추정된 다시점 2D 자세 히트맵 F를 기반으로 계산된다.  
@@ -177,7 +177,7 @@ volume은 N * N * N 크기의 그리드공간 G로 이산화할 수 있다.
 트레이닝 셋의 각 관절간 평균 거리 L_m,n를 신체부위 길이의 사전확률로 계산한다.  
 추론 국면에서, 쌍별 포텐셜은 아래와 같이 정의한다.  
 
-![cross_math3](./img/cross_math3.PNG)
+![cross_math3](./../../img/cross_math3.PNG)
 
 이떄 L_m,n은 J_m과 J_n간의 거리이다.  
 이 쌍별 항을 사용함으로써 3D 자세가 합리적인 신체 길이를 가지도록 할 수 있다.  
@@ -200,7 +200,7 @@ PSM 모델은 quantization error의 문제점이 있다. 예를 들어, N=32일 
 
 이 방식의 공간 이산화는 PSM과 두가지 방면에서 다른 점이 있다.  
 먼저, 서로 다른 관절점이 각각의 그리드를 가지게 되며 이는 모든 관절이 한 그리드를 공유하는 PSM과 다르다. 아래 그림을 참고하면, 각 관절점이 서로 다른 그리드를 가진다. 
-![cross_fig4](./img/cross_fig4.PNG)
+![cross_fig4](./../../img/cross_fig4.PNG)
 둘째로, bounding volume의 모서리 길이가 단계가 지날수록 작아진다.  
 이것이 그리드가 이전 단계보다 세밀해지는 이유이다.  
 
@@ -233,7 +233,7 @@ Bundle adjustment는 점진적 방법으로 공간을 탐색하지만 RPSM은 di
 
 #### 양적 결과 분석
 
-![cross_2dres](./img/cross_2dres.PNG)
+![cross_2dres](./../../img/cross_2dres.PNG)
 
 위는 본고에서 실험 시 가장 중요시 여기는 관절 부위에 대한 방법론별 성능을 기록한 표이다.  
 
@@ -242,7 +242,7 @@ Sum 과 Max는 각각 Baseline에서 epipolar line 위의 값들을 sum 연산 �
 
 Cross view fusion을 도입한 본고의 접근방식은 모든 관절에 대하여 Single 의 성능을 능가하였으며, 특히 손목 좌표 탐지 성능 개선이 눈에 띈다.  
 
-![cross_3dres](./img/cross_3dres.PNG)
+![cross_3dres](./../../img/cross_3dres.PNG)
 
 위는 마찬가지 조건으로 계산한 3D 자세 에러값을 표로 나타낸 것이다.  
 여기서 3D 자세는 모두 기본적 삼각 측량법을 통해 계산하였으며,  
@@ -261,7 +261,7 @@ RPSM 초기 단계에서, root joint를 중심점으로 하는 2,000mm의 3차�
 8가지 다른 방법을 사용하여 각각의 성능을 분석하였다.  
 이후 에러는 94.54mm에서 26.21mm까지 낮아졌다.  
 
-![cross_rp3dres](./img/cross_rp3dres.PNG)
+![cross_rp3dres](./../../img/cross_rp3dres.PNG)
 
 - RPSM vs Triangulation :  
 RPSM 방식이 삼각측량법보다 2D 자세가 불안정 할 때도 3D 에러가 적다.  

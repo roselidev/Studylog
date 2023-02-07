@@ -1,7 +1,7 @@
 # Lightweight Multi-View 3D Pose Estimation through Camera-Disentangled Representation
 Facebook Reality Labs
 
-![model_architecture](img/canonialfusion_modelarc.PNG)
+![model_architecture](../img/canonialfusion_modelarc.PNG)
 
 ## Abstract
 3D Multiview HPE를 위한 경량 솔루션을 제안한다.  
@@ -32,7 +32,7 @@ Shifted Iteration 방법에 기반한 DLT를 새로 제안한 이유는 기존�
 간단히 말해서, 우리의 기여는 (1) 잠재 공간의 3D 기하학을 이용한 multi-camera fusion 기술로 2D detector의 결과를 reason하고 성능을 높인 것, (2) 기존 방법보다 수백배 빠른 새로운 GPU 친화적 DLT 구현을 제안한 것이다.  
 
 ## 방법
-![model_architecture_verbose](img/canonialfusion_modelarc_verb.PNG)
+![model_architecture_verbose](../img/canonialfusion_modelarc_verb.PNG)
 
 우리의 방법은 n개의 공간 보정 및 동기화 된 카메라가 장면 내의 한 사람을 찍고 있다고 가정한다.(역주 : 즉 캘리브레이션 된, 파라미터가 모두 확보된 카메라들)  
 이미지셋을 I, projection matrix를 P라고 할 때 우리의 목표는 절대 월드 좌표계의 3D 자세 좌표를 한정된 관절 개수만큼 추정하는 것이다.  
@@ -48,7 +48,7 @@ Shifted Iteration 방법에 기반한 DLT를 새로 제안한 이유는 기존�
 
 각 이미지 입력에 대하여 CNN backbone e를 이용하여 feature z를 출력한다.  
 
-![math1](img/canonialfusion_math.PNG)
+![math1](../img/canonialfusion_math.PNG)
 
 이 떄 feature map z는 카메라 뷰포인트에 fully entangled 된 3D 포즈 정보를 담고 있다.  
 먼저 (1)3d pose detection of closely interactive humans using multiview cameras, (2)Deepfly3d: A deep learning-based approach for 3d limb and appendage tracking in tethered, adult drosophila 와 비슷한 baseline 접근방식을 제안한다.  
@@ -75,15 +75,15 @@ FTL이 궁금한 분들은 본고의 Supplementary Section을 참고하시라.
 본고에서 우리는 FTL을 이용하여 여러 이미지를 하나의 unified latent representation으로 매핑하려 한다.  
 특히 우리는 FTL을 이용하여 feature map z 세트를 camera projection matric P로 명시적으로 제한하여 공통된 canonial represenation에 매핑할 것이다.  
 
-![math2](img/canonialfusion_math2.PNG)
+![math2](../img/canonialfusion_math2.PNG)
 
 이제 feature map이 같은 canonial representation으로 매핑되었으니, 이를 concatenate한 후 1D CNN에 통과시켜 unified representation으로 fuse한다.  
 
-![math3](img/canonialfusion_math3.PNG)
+![math3](../img/canonialfusion_math3.PNG)
 
 이제 학습한 shared P3D 좌표를 다시 view-specific representation f로 변환하면서 camera view-point로부터 disentangle한다.  
 
-![math4](img/canonialfusion_math4.PNG)
+![math4](../img/canonialfusion_math4.PNG)
 
 Fusion 방법과 달리 Canonial Fusion은 카메라 projection operator를 명시적으로 사용하여 각 view를 jointly reasoning하는 과정을 간소화하였다.  
 CNN 블록은 따라서 멀티 카메라 세팅의 기하학적 disposition이 아니라 occlusion reasoning에만 집중할 수 있게 된다.  
@@ -92,11 +92,11 @@ CNN 블록은 따라서 멀티 카메라 세팅의 기하학적 disposition이 �
 ### latent code를 2D 좌표로 decode하기
 본고의 아키텍처 중 이 컴포넌트에서는 단일 이미지 자세 추정 모델을 이용하여 각 뷰의 2D 결과 f 를 얕은 CNN 디코더 d에 거쳐 히트맵 H를 구한다. 즉, 
 
-![math5](img/canonialfusion_math5.PNG)
+![math5](../img/canonialfusion_math5.PNG)
 
 마지막으로, joint j에 대한 2D 좌표 u_j를 구하기 위해 모든 공간 좌표축의 히트맵을 합쳐 계산한다.   
 
-![math6](img/canonialfusion_math6.PNG)
+![math6](../img/canonialfusion_math6.PNG)
 
 이 떄 이 과정은 히트맵 H에 대하여 미분가능하여 backpropagation을 수행할 수 있다.  
 다음 섹션에서, 2D 좌표를 어떻게 3D로 복구하였는지 자세히 설명한다.  
@@ -112,16 +112,16 @@ du = Px
 라는 것을 알 수 있다.  
 2d 좌표와 3d 좌표를 같은 좌표로 잘못 표현하였지만, 정확히 표현하면
 
-![math7](img/canonialfusion_math7.PNG)
+![math7](../img/canonialfusion_math7.PNG)
 
 로 표현되며 p_kT는 P(projection matrix)의 k번째 행을 가리킨다.  
 위의 세번째 수식을 사용하여 앞 두 수식을 풀면,  
 
-![math8](img/canonialfusion_math8.PNG)
+![math8](../img/canonialfusion_math8.PNG)
 
 이다. 마지막으로, 모든 n 뷰에 대하여 위 두개 수식을 풀어 총 2n개의 선형 방정식을 x에 대하여 풀기 위하여 간단히 
 
-![math9](img/canonialfusion_math9.PNG)
+![math9](../img/canonialfusion_math9.PNG)
 
 로 표현할 수 있다.  
 이 떄 A는 DLT 행렬이다.  
@@ -130,7 +130,7 @@ noise가 없을 때 위 수식은 하나의 non-trivial solution을 보장하며
 그러나, 신경망 등에 의해 추정된 noisy한 2D 좌표의 경우 위 수식으로 문제를 풀 수 없다.  
 DLT 구현에 대한 한 연구에 따르면, 위 수식은 아래와 같은 완화된 방정식으로 최적화할 수 있다.  
 
-![math10](img/canonialfusion_math10.PNG)
+![math10](../img/canonialfusion_math10.PNG)
 
 분명히 위 최적화 문제의 정답은 A_T*A의 eigenvector 및 그와 관련된 eigenvalue 최솟값 randa_min(A_t*A)이다.  
 현업에서 eigenvector는 SVD(Singular Value Decomposition)의 mean 값으로 구한다.  
@@ -143,12 +143,12 @@ DLT 구현에 대한 한 연구에 따르면, 위 수식은 아래와 같은 완
 우리가 제안한 DLT 구현이 2D 좌표 u에 대하여 미분가능하기 때문에, 3d 좌표 x와 관련된 gradient가 입력 이미지 I까지 흘러가며 end-to-end 훈련이 가능하다.  
 그러나, 실제로, 초반 훈련을 더 안정적으로 만들기 위해서는 2D MPJPE 최소화를 먼저 훈련하는 것이 도움이 된다는 것을 발견하였다.  
 
-![loss1](img/canonialfusion_loss.PNG)
+![loss1](../img/canonialfusion_loss.PNG)
 
 실험에서 우리는 위 오차함수에 따라 20 epoch 동안 모델을 사전훈련하였다.  
 그다음, 아래 3D MPJPE 오차함수에 따라 모델을 finetune 하였다.  
 
-![loss2](img/canonialfusion_loss2.PNG)
+![loss2](../img/canonialfusion_loss2.PNG)
 
 ## 실험 과정
 우리는 TotalCapture와 Human3.6M 두가지 대용량 데이터셋에 대하여 evaluation을 진행하였다.  
